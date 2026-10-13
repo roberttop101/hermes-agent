@@ -1,0 +1,12 @@
+{
+  "host_repository": "https://github.com/roberttop101/hermes-agent",
+  "upstream_repository": "https://github.com/NousResearch/hermes-agent",
+  "upstream_release": "v0.21.7",
+  "upstream_commit": "71d34bad1045610252eda02ee79549436896e784",
+  "plugin_repository": "https://github.com/roberttop101/hermes-execution-control",
+  "plugin_commit": "6dbb1774f816140a1b22094a1c96fce06fe952c4",
+  "plugin_name": "execution-control",
+  "private": true,
+  "activation": "explicit-per-profile",
+  "handoff": "blocked-native-kanban-only"
+}
