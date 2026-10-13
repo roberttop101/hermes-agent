@@ -26,7 +26,7 @@ jobs:
       - name: Upstream checks and native tests
         run: |
           "$RUNNER_TEMP/runtime/bin/python" scripts/check
-          HERMES_PYTHON="$RUNNER_TEMP/runtime/bin/python" scripts/run_tests.sh tests/hermes_cli/test_kanban_db.py tests/hermes_cli/test_plugins_loader.py tests/hermes_cli/test_plugins.py
+          HERMES_PYTHON="$RUNNER_TEMP/runtime/bin/python" scripts/run_tests.sh tests/hermes_cli/test_kanban_db.py tests/hermes_cli/test_kanban_block_composition.py tests/hermes_cli/test_plugins_loader.py tests/hermes_cli/test_plugins.py
       - name: Dashboard validation
         run: |
           npm ci --ignore-scripts --include-workspace-root --workspace web
