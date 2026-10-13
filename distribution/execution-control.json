@@ -4,7 +4,7 @@
   "upstream_release": "v0.21.7",
   "upstream_commit": "71d34bad1045610252eda02ee79549436896e784",
   "plugin_repository": "https://github.com/roberttop101/hermes-execution-control",
-  "plugin_commit": "6dbb1774f816140a1b22094a1c96fce06fe952c4",
+  "plugin_commit": "eff2a6862ecb8570e85015482e8b1c0d9ded9191",
   "plugin_name": "execution-control",
   "private": true,
   "activation": "explicit-per-profile",
