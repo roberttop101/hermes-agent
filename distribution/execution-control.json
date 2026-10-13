@@ -4,9 +4,15 @@
   "upstream_release": "v0.21.7",
   "upstream_commit": "71d34bad1045610252eda02ee79549436896e784",
   "plugin_repository": "https://github.com/roberttop101/hermes-execution-control",
-  "plugin_commit": "02a8a30d1555c2277763237f5925c9b84da8c439",
+  "plugin_commit": "23b441e2e0ae936283e2d5f803919d56a9bf84b7",
   "plugin_name": "execution-control",
   "private": true,
   "activation": "explicit-per-profile",
-  "handoff": "blocked-native-kanban-only"
+  "handoff": "blocked-native-kanban-only",
+  "capabilities": [
+    "reviewed-mission-routing",
+    "native-health-evidence",
+    "explicit-safe-watchdog",
+    "authenticated-operations"
+  ]
 }
