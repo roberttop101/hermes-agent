@@ -34,3 +34,8 @@ official release. No images/packages are published by these new workflows.
 Rollback the fork patches through a normal revert PR; disable the extension and
 retain its ledger and native board. Do not rewrite the original custom checkout
 or erase native task history.
+
+The fork adds explicit `block_task(..., allow_nested=True)` transaction composition
+for consumers that inspect and conditionally park a native claim under one write
+lock. Existing callers still reject nested transactions. Composed lifecycle hooks
+run before the outer commit; the owning caller must treat them accordingly.

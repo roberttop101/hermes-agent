@@ -3143,24 +3143,20 @@ def edit_task(
 def block_task(
     conn: sqlite3.Connection, task_id: str, *, reason: Optional[str] = None,
     kind: Optional[str] = None, expected_run_id: Optional[int] = None,
+    allow_nested: bool = False,
 ) -> bool:
-    """``running``/``ready`` -> ``blocked`` (or ``todo`` / ``triage``, see
-    :func:`_route_block`). ``kind='dependency'`` with no incomplete parent is
-    re-kinded to ``needs_input`` (sticky) so ``recompute_ready`` cannot
-    promote it into a context-free respawn. ``transient`` still counts
-    toward the loop breaker so a forever-flaky task escalates. True on any
-    transition.
+    """Park running/ready work according to the typed block policy.
 
-    An already-``blocked`` card that the failure breaker parked UNTYPED
-    (``block_kind IS NULL``, no live run) is classified in place when *kind*
-    is supplied: ``block_kind``/``block_recurrences`` are set and a ``blocked``
-    audit event is appended, while status, failure evidence and the terminal
-    runs stay exactly as the breaker left them. A typed block, a card with a
-    live run, or a kind-less call on a blocked card are still refused.
+    Dependency blocks with no open parent become sticky needs_input blocks.
+    Transient failures count toward the loop breaker. Untyped breaker blocks
+    without a live run can be classified once, retaining failure/run evidence;
+    typed blocks, kind-less calls and stale run owners cannot reclassify them.
+    Explicit allow_nested composes inside an owning transaction via savepoints:
+    lifecycle callbacks then precede the outer commit; callers must account for it.
     """
     if kind is not None and kind not in VALID_BLOCK_KINDS:
         raise ValueError(f"block kind must be one of {sorted(VALID_BLOCK_KINDS)} or None")
-    with write_txn(conn):
+    with write_txn(conn, allow_nested=allow_nested):
         cur_row = conn.execute(
             "SELECT status, block_kind, block_recurrences FROM tasks WHERE id = ?", (task_id,),
         ).fetchone()
